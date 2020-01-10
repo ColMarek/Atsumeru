@@ -21,6 +21,15 @@ async function collectData() {
   data = data.flat().sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
+async function resendPageData(win, refreshData) {
+  if (refreshData) {
+    await collectData();
+  }
+  logger.info("Sending data to render process");
+  win.webContents.send("feed-data", data);
+}
+
 module.exports = {
-  initialize
+  initialize,
+  resendPageData
 };

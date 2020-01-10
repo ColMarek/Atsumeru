@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, MenuItem, shell } = require("electron");
 const lib = require("./src/lib");
 const logger = require("./src/lib/logger");
 logger.info("****************************");
@@ -23,7 +23,8 @@ function createWindow() {
     }
   });
   win.loadFile("src/index.html");
-  Menu.setApplicationMenu(null);
+
+  setupMenu();
 
   lib.initialize(win);
 
@@ -59,3 +60,61 @@ app.on("activate", () => {
     createWindow();
   }
 });
+
+function setupMenu() {
+  const menu = Menu.buildFromTemplate([
+    {
+      label: "File",
+      submenu: [
+        { type: "separator" },
+        {
+          label: "Exit",
+          click() {
+            app.quit();
+          }
+        }
+      ]
+    },
+    {
+      label: "Help",
+      submenu: [
+        {
+          label: "Erai-raws",
+          click() {
+            shell.openExternal("https://www.erai-raws.info/");
+          }
+        },
+        {
+          label: "HorribleSubs",
+          click() {
+            shell.openExternal("https://horriblesubs.info/");
+          }
+        },
+        { type: "separator" },
+        {
+          label: "About",
+          click() {}
+        }
+      ]
+    }
+  ]);
+
+  // Show page reload when in development
+  // https://electronjs.org/docs/api/app#appispackaged-readonly
+  if (app.isPackaged != true) {
+    menu.append(
+      new MenuItem({
+        label: "Reload page",
+        accelerator: "CmdOrCtrl+Shift+R",
+        click() {
+          win.reload();
+          win.webContents.once("dom-ready", () => {
+            lib.resendPageData(win, false);
+          });
+        }
+      })
+    );
+  }
+
+  Menu.setApplicationMenu(menu);
+}

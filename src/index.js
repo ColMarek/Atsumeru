@@ -17,5 +17,6 @@ if (process.platform !== "darwin") {
 }
 
 ipc.on("feed-data", function(_event, arg) {
+  console.log("Received data");
   app.feed = arg;
 });
