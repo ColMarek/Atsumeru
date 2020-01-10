@@ -1,0 +1,25 @@
+{
+  "name": "atsufuka",
+  "version": "1.0.0",
+  "description": "An application to combine RSS feeds of anime downloads",
+  "author": {
+    "name": "ColMarek",
+    "email": "colmarek254@gmail.com",
+    "url": "https://colmarek.github.io"
+  },
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "start:dev": "nodemon --watch . --exec \"electron . --debug\""
+  },
+  "dependencies": {
+    "axios": "^0.19.1",
+    "eslint": "^6.8.0",
+    "global": "^4.4.0"
+  },
+  "devDependencies": {
+    "electron": "^7.1.8",
+    "nodemon": "^2.0.2"
+  }
+}
