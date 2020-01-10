@@ -6,12 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Atsufuka</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
-    <div id="app">
-      <div class="" v-for="(item, index) in feed" :key="index">
-        {{item.title}}
+    <div id="app" class="container">
+      <div class="feed">
+
+        <div class="feed-item" v-for="(item, index) in feed" :key="index">
+          <p>{{item.title}}</p>
+          <p class="download-button" @click="download(item)">Download</p>
+        </div>
       </div>
     </div>
     <script src="index.js"></script>

@@ -1,0 +1,13 @@
+.feed {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-gap: 2rem;
+}
+.feed-item {
+  margin-bottom: 2rem;
+}
+
+.download-button {
+  cursor: pointer;
+  display: inline-block;
+}

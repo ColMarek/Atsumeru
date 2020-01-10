@@ -1,3 +1,4 @@
+const { shell, ipcMain } = require("electron");
 const erai = require("./erai-data");
 const hs = require("./horrible-subs-data");
 const logger = require("./logger");
@@ -28,6 +29,15 @@ async function resendPageData(win, refreshData) {
   logger.info("Sending data to render process");
   win.webContents.send("feed-data", data);
 }
+
+ipcMain.on("download", function(event, arg) {
+  logger.info(`Received download request for ${arg.title}`);
+  if (arg.source == "HorribleSubs") {
+    shell.openExternal(arg.link);
+  } else {
+    // TODO Handle download for Erai-Raws
+  }
+});
 
 module.exports = {
   initialize,

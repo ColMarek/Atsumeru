@@ -5,7 +5,12 @@ const data = { feed: null };
 // eslint-disable-next-line no-undef
 const app = new Vue({
   el: "#app",
-  data
+  data,
+  methods: {
+    download(item) {
+      ipc.send("download", item);
+    }
+  }
 });
 
 if (process.platform !== "darwin") {

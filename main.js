@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem, shell } = require("electron");
+const { app, BrowserWindow, Menu, shell } = require("electron");
 const lib = require("./src/lib");
 const logger = require("./src/lib/logger");
 logger.info("****************************");
@@ -100,6 +100,14 @@ function setupMenu() {
             win.webContents.once("dom-ready", () => {
               lib.resendPageData(win, false);
             });
+          }
+        },
+        {
+          label: "Open DevTools",
+          accelerator: "CmdOrCtrl+Shift+I",
+          visible: !app.isPackaged, // Show page reload when in development
+          click() {
+            win.webContents.openDevTools();
           }
         },
         {

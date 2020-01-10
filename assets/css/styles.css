@@ -13,3 +13,7 @@ html {
 .action-menu-item {
   letter-spacing: 1px;
 }
+
+.container {
+  padding: 1rem;
+}
