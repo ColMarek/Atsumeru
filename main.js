@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Menu } = require("electron");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -6,14 +6,17 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
+    icon: "assets/img/icon.ico",
     width: 800,
     height: 600,
     autoHideMenuBar: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: true // https://electronjs.org/docs/tutorial/security#how
     }
   });
   win.loadFile("src/index.html");
+  Menu.setApplicationMenu(null);
 
   // Emitted when the window is closed.
   win.on("closed", () => {
