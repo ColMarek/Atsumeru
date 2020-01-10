@@ -1,10 +1,19 @@
 .feed {
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(4, auto);
   grid-gap: 2rem;
 }
+
 .feed-item {
-  margin-bottom: 2rem;
+  display: flex;
+}
+
+.feed-item img {
+  border-radius: 4px;
+}
+
+.feed-item-content {
+  margin-left: 0.6rem;
 }
 
 .download-button {
