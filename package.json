@@ -16,11 +16,12 @@
   "dependencies": {
     "axios": "^0.19.1",
     "custom-electron-titlebar": "^3.2.1",
-    "eslint": "^6.8.0",
-    "global": "^4.4.0"
+    "moment": "^2.24.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "electron": "^7.1.8",
+    "eslint": "^6.8.0",
     "nodemon": "^2.0.2"
   }
 }

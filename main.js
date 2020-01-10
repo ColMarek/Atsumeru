@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu } = require("electron");
+const lib = require("./src/lib");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,6 +18,8 @@ function createWindow() {
   });
   win.loadFile("src/index.html");
   Menu.setApplicationMenu(null);
+
+  lib.collectData();
 
   // Emitted when the window is closed.
   win.on("closed", () => {
