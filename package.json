@@ -17,6 +17,7 @@
     "axios": "^0.19.1",
     "custom-electron-titlebar": "^3.2.1",
     "moment": "^2.24.0",
+    "winston": "^3.2.1",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {

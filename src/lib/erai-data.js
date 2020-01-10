@@ -1,9 +1,12 @@
 const axios = require("axios").default;
 const moment = require("moment");
 const { parseString } = require("./utils/xmlToJson");
+const logger = require("./logger");
 
 async function getData() {
+  logger.info("Fetching data from Erai-raws");
   const response = await axios.get("https://ru.erai-raws.info/rss-1080/");
+  logger.info("Finished fetching data from Erai-raws");
 
   // The feed uses an en dash which will be parsed as ΓÇô instead of –
   response.data = response.data.replace(/&#8211;/g, "-");
