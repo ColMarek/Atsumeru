@@ -1,6 +1,9 @@
 const { app, BrowserWindow, Menu } = require("electron");
 const lib = require("./src/lib");
 const logger = require("./src/lib/logger");
+logger.info("****************************");
+logger.info("*** Application starting ***");
+logger.info("****************************");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
