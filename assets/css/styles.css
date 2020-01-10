@@ -8,3 +8,8 @@ html {
   font-family: "Arimo", sans-serif;
   color: #f4f4f4;
 }
+.titlebar,
+.titlebar > *,
+.action-menu-item {
+  letter-spacing: 1px;
+}
