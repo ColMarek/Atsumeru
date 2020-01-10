@@ -92,29 +92,23 @@ function setupMenu() {
         },
         { type: "separator" },
         {
+          label: "Reload page",
+          accelerator: "CmdOrCtrl+Shift+R",
+          visible: !app.isPackaged, // Show page reload when in development
+          click() {
+            win.reload();
+            win.webContents.once("dom-ready", () => {
+              lib.resendPageData(win, false);
+            });
+          }
+        },
+        {
           label: "About",
           click() {}
         }
       ]
     }
   ]);
-
-  // Show page reload when in development
-  // https://electronjs.org/docs/api/app#appispackaged-readonly
-  if (app.isPackaged != true) {
-    menu.append(
-      new MenuItem({
-        label: "Reload page",
-        accelerator: "CmdOrCtrl+Shift+R",
-        click() {
-          win.reload();
-          win.webContents.once("dom-ready", () => {
-            lib.resendPageData(win, false);
-          });
-        }
-      })
-    );
-  }
 
   Menu.setApplicationMenu(menu);
 }
