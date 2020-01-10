@@ -9,8 +9,8 @@ function createWindow() {
   const frame = process.platform == "darwin" ? true : false;
   win = new BrowserWindow({
     icon: "assets/img/icon.ico",
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     autoHideMenuBar: true,
     frame,
     webPreferences: {
@@ -20,7 +20,14 @@ function createWindow() {
   win.loadFile("src/index.html");
   Menu.setApplicationMenu(null);
 
-  lib.collectData();
+  lib
+    .collectData()
+    .then(data => {
+      win.webContents.send("feed-data", data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
   // Emitted when the window is closed.
   win.on("closed", () => {

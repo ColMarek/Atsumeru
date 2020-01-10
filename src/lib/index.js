@@ -4,6 +4,7 @@ const hs = require("./horrible-subs-data");
 async function collectData() {
   let data = await Promise.all([erai.getData(), hs.getData()]);
   data = data.flat().sort((a, b) => (a.date < b.date ? 1 : -1));
+  return data;
 }
 
 module.exports = {
