@@ -25,15 +25,7 @@ function createWindow() {
   win.loadFile("src/index.html");
   Menu.setApplicationMenu(null);
 
-  lib
-    .collectData()
-    .then(data => {
-      logger.info("Sending data to render process");
-      win.webContents.send("feed-data", data);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  lib.initialize(win);
 
   // Emitted when the window is closed.
   win.on("closed", () => {
