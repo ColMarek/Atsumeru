@@ -30,12 +30,13 @@ async function resendPageData(win, refreshData) {
   win.webContents.send("feed-data", data);
 }
 
-ipcMain.on("download", function(event, arg) {
+ipcMain.on("download", async (event, arg) => {
   logger.info(`Received download request for ${arg.title}`);
   if (arg.source == "HorribleSubs") {
     shell.openExternal(arg.link);
   } else {
-    // TODO Handle download for Erai-Raws
+    const magnet = await erai.getTorrentMagnet(arg);
+    shell.openExternal(magnet);
   }
 });
 

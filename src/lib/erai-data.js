@@ -1,5 +1,7 @@
 const axios = require("axios").default;
 const moment = require("moment");
+const parseTorrent = require("parse-torrent");
+const fs = require("fs");
 const { parseString } = require("./utils/xmlToJson");
 const logger = require("./logger");
 
@@ -29,4 +31,20 @@ async function getData() {
   return data;
 }
 
-module.exports = { getData };
+async function getTorrentMagnet(item) {
+  logger.info(`Fetching torrent data for ${item.title}`);
+  const response = await axios({ method: "GET", url: item.link, responseType: "stream" });
+  logger.info(`Finished fetching data for ${item.title}`);
+
+  return new Promise(resolve => {
+    const stream = response.data.pipe(fs.createWriteStream("./temp.torrent"));
+    stream.on("finish", () => {
+      const torrentData = parseTorrent(fs.readFileSync("./temp.torrent"));
+      fs.unlinkSync("./temp.torrent");
+      const magnetUri = parseTorrent.toMagnetURI(torrentData);
+      resolve(magnetUri);
+    });
+  });
+}
+
+module.exports = { getData, getTorrentMagnet };
