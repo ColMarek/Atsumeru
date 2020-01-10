@@ -6,12 +6,13 @@ const lib = require("./src/lib");
 let win;
 
 function createWindow() {
+  const frame = process.platform == "darwin" ? true : false;
   win = new BrowserWindow({
     icon: "assets/img/icon.ico",
     width: 800,
     height: 600,
     autoHideMenuBar: true,
-    frame: false,
+    frame,
     webPreferences: {
       nodeIntegration: true // https://electronjs.org/docs/tutorial/security#how
     }
