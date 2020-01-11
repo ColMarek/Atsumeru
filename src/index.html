@@ -14,7 +14,7 @@
       <div class="feed">
 
         <div class="feed-item" v-for="(item, index) in feed" :key="index">
-          <img src="https://i.picsum.photos/id/108/100/150.jpg" alt="Anime">
+          <img :src="item.imageUrl" alt="Anime">
           <div class="feed-item-content">
             <p>{{item.title}}</p>
             <p class="download-button" @click="download(item)">Download</p>
