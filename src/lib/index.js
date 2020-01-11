@@ -67,7 +67,6 @@ async function getImages() {
 
   const res = await Promise.all(promises);
   res.forEach(r => {
-    console.log(r.description);
     datastore.saveAnimeDetail(r.title, r.siteUrl, r.description, r.imageUrl, r.imageColor);
     const indexes = getAllIndexesOf(r.title);
     indexes.forEach(i => {
