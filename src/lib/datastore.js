@@ -1,20 +1,28 @@
+const { app } = require("electron");
+const path = require("path");
 const Datastore = require("nedb");
 const fs = require("fs");
 const logger = require("./logger");
 
+const baseDir = !app.isPackaged ? path.normalize(`${app.getPath("userData")}/data`) : "./data";
+
 const imageDb = new Datastore({
-  filename: "./data/anime-cache-db",
+  filename: `${baseDir}/anime-cache-db`,
   autoload: true
 });
 
 function intialize() {
-  const expectedVersion = 3;
-  const actualVersion = fs.readFileSync("./data/db-version").toString();
+  const expectedVersion = 1;
 
-  if (actualVersion != expectedVersion) {
-    logger.info("Clearing anime-cache-db");
-    fs.unlinkSync("./data/anime-cache-db");
-    fs.writeFileSync("./data/db-version", expectedVersion);
+  if (fs.existsSync(`${baseDir}/db-version`)) {
+    const actualVersion = fs.readFileSync(`${baseDir}/db-version`).toString();
+    if (actualVersion != expectedVersion) {
+      logger.info("Clearing anime-cache-db");
+      fs.unlinkSync(`${baseDir}/anime-cache-db`);
+      fs.writeFileSync(`${baseDir}/db-version`, expectedVersion);
+    }
+  } else {
+    fs.writeFileSync(`${baseDir}/db-version`, expectedVersion);
   }
 }
 
