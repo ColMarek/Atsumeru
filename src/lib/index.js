@@ -3,11 +3,12 @@ const erai = require("./erai-data");
 const hs = require("./horrible-subs-data");
 const logger = require("./logger");
 
-let data = null;
+let data = [];
 
 async function initialize(win) {
   try {
     await collectData();
+    console.dir(data.splice(0, 6));
     logger.info("Sending data to render process");
     win.webContents.send("feed-data", data);
   } catch (e) {

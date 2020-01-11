@@ -16,12 +16,14 @@ async function getData() {
 
   const data = [];
   for (const item of res.rss.channel[0].item) {
+    const animeTitle = item.title[0]
+      .replace("[1080p] ", "")
+      .replace(/ - \d*.*/g, "") // – 13 (HEVC),  – 13v2,  – 02
+      .trim();
     data.push({
       title: item.title[0],
-      animeTitle: item.title[0]
-        .replace("[1080p] ", "")
-        .replace(/ - \d*.*/g, "") // – 13 (HEVC),  – 13v2,  – 02
-        .trim(),
+      animeTitle,
+      episode: item.title[0].split(`${animeTitle} - `)[1],
       link: item.link[0],
       date: moment(item.pubDate[0]).unix(),
       source: "Erai-raws"

@@ -11,12 +11,17 @@ async function getData() {
 
   const data = [];
   for (const item of res.rss.channel[0].item) {
+    const animeTitle = item.title[0]
+      .replace("[HorribleSubs]", "")
+      .replace("[1080p].mkv", "")
+      .replace(/( - )\d* /g, "")
+      .trim();
     data.push({
       title: item.title[0],
-      animeTitle: item.title[0]
-        .replace("[HorribleSubs]", "")
-        .replace("[1080p].mkv", "")
-        .replace(/( - )\d* /g, "")
+      animeTitle,
+      episode: item.title[0]
+        .split(`${animeTitle} - `)[1]
+        .split("[1080p]")[0]
         .trim(),
       link: item.link[0],
       date: moment(item.pubDate[0]).unix(),
