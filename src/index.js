@@ -28,7 +28,9 @@ if (process.platform !== "darwin") {
 ipc.on("feed-data", function(_event, arg) {
   console.log("Received data");
   arg = arg.map(i => {
-    i.description = i.description.replace(/(<([^>]+)>)/gi, "");
+    if (i.description != null) {
+      i.description = i.description.replace(/(<([^>]+)>)/gi, "");
+    }
     return { ...i, dateFormatted: moment.unix(i.date).format("D MMM, h:mm A") };
   });
   app.feed = arg;
