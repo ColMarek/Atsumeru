@@ -48,23 +48,35 @@ async function getImages() {
       // - The feed contains two eposides of the same anime form the same source
       // - Both sources use the same name for the title e.g. both romanji
       if (!alreadySearchedFor.includes(item.animeTitle)) {
-        console.log(item.animeTitle);
         promises.push(anilist.getDetailForTitle(item.animeTitle));
         alreadySearchedFor.push(item.animeTitle);
       } else {
-        logger.info(`Aleardy fetched detail for ${item.animeTitle.substr(0, 24)}`);
+        logger.info(`Aleardy fetching detail for ${item.animeTitle.substr(0, 24)}`);
       }
     } else {
-      data[index] = { ...item, imageUrl: storeDetail.imageUrl, imageColor: storeDetail.imageColor };
+      data[index] = {
+        ...item,
+        siteUrl: storeDetail.siteUrl,
+        description: storeDetail.description,
+        imageUrl: storeDetail.imageUrl,
+        imageColor: storeDetail.imageColor
+      };
     }
   }
 
   const res = await Promise.all(promises);
   res.forEach(r => {
-    datastore.saveAnimeDetail(r.title, r.imageUrl, r.imageColor, r.siteUrl);
+    console.log(r.description);
+    datastore.saveAnimeDetail(r.title, r.siteUrl, r.description, r.imageUrl, r.imageColor);
     const indexes = getAllIndexesOf(r.title);
     indexes.forEach(i => {
-      data[i] = { ...data[i], imageUrl: r.imageUrl, imageColor: r.imageColor };
+      data[i] = {
+        ...data[i],
+        siteUrl: r.siteUrl,
+        description: r.description,
+        imageUrl: r.imageUrl,
+        imageColor: r.imageColor
+      };
     });
   });
 }
@@ -77,6 +89,10 @@ ipcMain.on("download", async (event, arg) => {
     const magnet = await erai.getTorrentMagnet(arg);
     shell.openExternal(magnet);
   }
+});
+
+ipcMain.on("open-anime", (event, arg) => {
+  shell.openExternal(arg.siteUrl);
 });
 
 function getAllIndexesOf(title) {

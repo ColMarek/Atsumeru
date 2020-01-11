@@ -3,8 +3,14 @@
   src: url("../font/Arimo-Regular.ttf");
 }
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 html {
-  background: #373f47;
+  background: #252a30;
   font-family: "Arimo", sans-serif;
   color: #f4f4f4;
 }
@@ -15,5 +21,9 @@ html {
 }
 
 .container {
-  padding: 1rem;
+  padding: 2rem;
+}
+
+.hidden {
+  display: none;
 }

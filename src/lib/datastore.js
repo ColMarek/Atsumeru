@@ -4,9 +4,9 @@ const imageDb = new Datastore({
   autoload: true
 });
 
-async function saveAnimeDetail(title, imageUrl, imageColor, siteUrl) {
+async function saveAnimeDetail(title, siteUrl, description, imageUrl, imageColor) {
   return new Promise((resolve, reject) => {
-    const data = { _id: title, title, imageUrl, imageColor, siteUrl };
+    const data = { _id: title, title, siteUrl, description, imageUrl, imageColor };
     imageDb.insert(data, (err, doc) => {
       if (err) {
         reject(err);

@@ -22,6 +22,7 @@ function createWindow() {
       nodeIntegration: true // https://electronjs.org/docs/tutorial/security#how
     }
   });
+  win.maximize();
   win.loadFile("src/index.html");
 
   setupMenu();

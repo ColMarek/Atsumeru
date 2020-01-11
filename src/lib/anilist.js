@@ -6,6 +6,7 @@ async function getDetailForTitle(title) {
   {
     Media(search: "${title}", type: ANIME) {
       siteUrl
+      description
       coverImage {
         large
         color
@@ -24,15 +25,17 @@ async function getDetailForTitle(title) {
         Accept: "application/json"
       }
     });
-    logger.info(`Fetched image for ${title.substr(0, 24)}...`);
+    logger.info(`Fetched detail for ${title.substr(0, 24)}...`);
 
     return {
       title,
+      siteUrl: res.data.data.Media.siteUrl,
+      description: res.data.data.Media.description,
       imageUrl: res.data.data.Media.coverImage.large,
-      imageColor: res.data.data.Media.coverImage.color,
-      siteUrl: res.data.data.Media.siteUrl
+      imageColor: res.data.data.Media.coverImage.color
     };
   } catch (e) {
+    logger.error(e.message);
     const statusCode = e.response.status;
     throw new Error(statusCode);
   }
