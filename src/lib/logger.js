@@ -13,8 +13,8 @@ winston.configure({
   level: "debug",
   format: myFormat,
   transports: [
-    new winston.transports.Console({ format: combine(myFormat, colorize({ all: true })) }),
-    new winston.transports.File({ filename: "log.log" })
+    new winston.transports.Console({ format: combine(myFormat, colorize({ all: true })) })
+    // new winston.transports.File({ filename: "log.log" })
   ]
 });
 
