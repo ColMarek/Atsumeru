@@ -7,7 +7,7 @@ async function getDetailForTitle(title) {
     Media(search: "${title}", type: ANIME) {
       siteUrl
       coverImage {
-        medium
+        large
         color
       }
     }
@@ -28,7 +28,7 @@ async function getDetailForTitle(title) {
 
     return {
       title,
-      imageUrl: res.data.data.Media.coverImage.medium,
+      imageUrl: res.data.data.Media.coverImage.large,
       imageColor: res.data.data.Media.coverImage.color,
       siteUrl: res.data.data.Media.siteUrl
     };
