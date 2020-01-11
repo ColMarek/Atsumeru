@@ -11,7 +11,8 @@
   "license": "MIT",
   "scripts": {
     "start": "electron .",
-    "start:dev": "nodemon --watch . --exec \"electron . --debug\""
+    "start:dev": "nodemon --watch . --exec \"electron . --debug\"",
+    "build": "rimraf dist && electron-builder"
   },
   "dependencies": {
     "axios": "^0.19.1",
@@ -24,7 +25,23 @@
   },
   "devDependencies": {
     "electron": "^7.1.8",
+    "electron-builder": "^21.2.0",
     "eslint": "^6.8.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "rimraf": "^3.0.0"
+  },
+  "build": {
+    "appId": "com.colmarek.${name}",
+    "productName": "Atsumeru",
+    "copyright": "Copyright © 2020 ColMarek",
+    "mac": {
+      "category": "public.app-category.entertainment"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "assets/img/icon_256.ico"
+    }
   }
 }
