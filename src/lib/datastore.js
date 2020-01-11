@@ -1,8 +1,22 @@
 const Datastore = require("nedb");
+const fs = require("fs");
+const logger = require("./logger");
+
 const imageDb = new Datastore({
   filename: "./data/anime-cache-db",
   autoload: true
 });
+
+function intialize() {
+  const expectedVersion = 3;
+  const actualVersion = fs.readFileSync("./data/db-version").toString();
+
+  if (actualVersion != expectedVersion) {
+    logger.info("Clearing anime-cache-db");
+    fs.unlinkSync("./data/anime-cache-db");
+    fs.writeFileSync("./data/db-version", expectedVersion);
+  }
+}
 
 async function saveAnimeDetail(title, siteUrl, description, imageUrl, imageColor) {
   return new Promise((resolve, reject) => {
@@ -33,4 +47,4 @@ async function findAnimeDetail(title) {
   });
 }
 
-module.exports = { saveAnimeDetail, findAnimeDetail };
+module.exports = { intialize, saveAnimeDetail, findAnimeDetail };
