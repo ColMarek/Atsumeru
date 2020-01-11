@@ -5,6 +5,7 @@ const fs = require("fs");
 const logger = require("./logger");
 
 const baseDir = app.isPackaged ? path.normalize(`${app.getPath("userData")}/data`) : "./data";
+const dbVersionPath = path.normalize(`${baseDir}/db-version`);
 
 const imageDb = new Datastore({
   filename: `${baseDir}/anime-cache-db`,
@@ -14,15 +15,15 @@ const imageDb = new Datastore({
 function intialize() {
   const expectedVersion = 1;
 
-  if (fs.existsSync(`${baseDir}/db-version`)) {
-    const actualVersion = fs.readFileSync(`${baseDir}/db-version`).toString();
+  if (fs.existsSync(dbVersionPath)) {
+    const actualVersion = fs.readFileSync(dbVersionPath).toString();
     if (actualVersion != expectedVersion) {
       logger.info("Clearing anime-cache-db");
       fs.unlinkSync(`${baseDir}/anime-cache-db`);
-      fs.writeFileSync(`${baseDir}/db-version`, expectedVersion);
+      fs.writeFileSync(dbVersionPath, expectedVersion);
     }
   } else {
-    fs.writeFileSync(`${baseDir}/db-version`, expectedVersion);
+    fs.writeFileSync(dbVersionPath, expectedVersion);
   }
 }
 
