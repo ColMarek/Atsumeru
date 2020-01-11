@@ -4,11 +4,11 @@ const hs = require("./horrible-subs-data");
 const logger = require("./logger");
 
 let data = [];
+let animeTitles = [];
 
 async function initialize(win) {
   try {
     await collectData();
-    console.dir(data.splice(0, 6));
     logger.info("Sending data to render process");
     win.webContents.send("feed-data", data);
   } catch (e) {
@@ -21,6 +21,8 @@ async function collectData() {
   data = await Promise.all([erai.getData(), hs.getData()]);
   logger.info("Finished fetching data");
   data = data.flat().sort((a, b) => (a.date < b.date ? 1 : -1));
+  animeTitles = Array.from(new Set(data.map(i => i.animeTitle)));
+  // TODO Reduce duplicates of animeTitles. See Levenshtein distance
 }
 
 async function resendPageData(win, refreshData) {
