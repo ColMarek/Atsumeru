@@ -1,5 +1,7 @@
 const winston = require("winston");
 const moment = require("moment");
+const path = require("path");
+const { app } = require("electron");
 
 const { combine, printf, colorize } = winston.format;
 
@@ -14,9 +16,12 @@ winston.configure({
   format: myFormat,
   transports: [
     new winston.transports.Console({ format: combine(myFormat, colorize({ all: true })) })
-    // new winston.transports.File({ filename: "log.log" })
   ]
 });
+if (app.isPackaged) {
+  const logFilePath = path.normalize(`${app.getPath("userData")}/logs/main.log`);
+  winston.add(new winston.transports.File({ filename: logFilePath, maxsize: 50 * 1024 }));
+}
 
 module.exports = {
   info(message) {
