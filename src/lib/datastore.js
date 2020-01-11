@@ -4,7 +4,7 @@ const Datastore = require("nedb");
 const fs = require("fs");
 const logger = require("./logger");
 
-const baseDir = !app.isPackaged ? path.normalize(`${app.getPath("userData")}/data`) : "./data";
+const baseDir = app.isPackaged ? path.normalize(`${app.getPath("userData")}/data`) : "./data";
 
 const imageDb = new Datastore({
   filename: `${baseDir}/anime-cache-db`,
