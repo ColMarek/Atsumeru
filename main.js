@@ -12,8 +12,9 @@ let win;
 function createWindow() {
   logger.info(`Application ready. Running on ${process.platform}`);
   const frame = process.platform == "darwin" ? true : false;
+  const icon = process.platform == "darwin" ? "assets/img/icon.icns" : "assets/img/icon.ico";
   win = new BrowserWindow({
-    icon: "assets/img/icon.ico",
+    icon,
     width: 1280,
     height: 720,
     autoHideMenuBar: true,
