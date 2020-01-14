@@ -18,7 +18,11 @@
       </symbol>
     </svg>
     <div id="app" class="container">
-      <div class="feed">
+      <div class="loading" v-if="loading">
+        <p>Loading</p>
+        <div class="lds-dual-ring"></div>
+      </div>
+      <div class="feed" v-if="feed">
         <div class="feed-item" v-for="(item, index) in feed" :key="index">
           <img :src="item.imageUrl" alt="Anime" class="feed-item-image">
           <div class="feed-item-content">

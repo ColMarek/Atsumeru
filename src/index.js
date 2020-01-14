@@ -2,11 +2,13 @@ const electron = require("electron");
 const moment = require("moment");
 const ipc = electron.ipcRenderer;
 
-const data = { feed: null };
 // eslint-disable-next-line no-undef
 const app = new Vue({
   el: "#app",
-  data,
+  data: {
+    feed: null,
+    loading: true
+  },
   methods: {
     download(item) {
       ipc.send("download", item);
@@ -34,4 +36,5 @@ ipc.on("feed-data", function(_event, arg) {
     return { ...i, dateFormatted: moment.unix(i.date).format("D MMM, h:mm A") };
   });
   app.feed = arg;
+  app.loading = false;
 });
