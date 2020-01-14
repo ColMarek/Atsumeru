@@ -40,7 +40,10 @@ function createWindow() {
 
   win.once("ready-to-show", () => {
     win.show();
-    lib.initialize(win);
+    win.setProgressBar(2);
+    lib.initialize(win).then(() => {
+      win.setProgressBar(-1);
+    });
   });
 
   // Emitted when the window is closed.
