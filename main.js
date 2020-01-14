@@ -28,6 +28,7 @@ function createWindow() {
     autoHideMenuBar: true,
     frame,
     backgroundColor: "#252a30",
+    show: false,
     webPreferences: {
       nodeIntegration: true // https://electronjs.org/docs/tutorial/security#how
     }
@@ -37,7 +38,10 @@ function createWindow() {
 
   setupMenu();
 
-  lib.initialize(win);
+  win.once("ready-to-show", () => {
+    win.show();
+    lib.initialize(win);
+  });
 
   // Emitted when the window is closed.
   win.on("closed", () => {
