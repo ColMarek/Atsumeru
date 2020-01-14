@@ -1,9 +1,17 @@
 const { app, BrowserWindow, Menu, shell } = require("electron");
+const unhandled = require("electron-unhandled");
 const lib = require("./src/lib");
 const logger = require("./src/lib/logger");
 logger.info("****************************");
 logger.info("*** Application starting ***");
 logger.info("****************************");
+
+unhandled({
+  logger: error => {
+    win.webContents.send("error", error.message);
+    logger.error(error.message);
+  }
+});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

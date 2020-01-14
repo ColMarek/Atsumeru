@@ -8,14 +8,10 @@ const anilist = require("./anilist");
 let data = [];
 
 async function initialize(win) {
-  try {
-    datastore.intialize();
-    await collectData();
-    logger.info("Sending data to render process");
-    win.webContents.send("feed-data", data);
-  } catch (e) {
-    logger.error(e.message);
-  }
+  datastore.intialize();
+  await collectData();
+  logger.info("Sending data to render process");
+  win.webContents.send("feed-data", data);
 }
 
 async function collectData() {

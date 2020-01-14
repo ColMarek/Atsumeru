@@ -7,7 +7,8 @@ const app = new Vue({
   el: "#app",
   data: {
     feed: null,
-    loading: true
+    loading: true,
+    error: null
   },
   methods: {
     download(item) {
@@ -37,4 +38,11 @@ ipc.on("feed-data", function(_event, arg) {
   });
   app.feed = arg;
   app.loading = false;
+});
+
+ipc.on("error", (_event, arg) => {
+  console.error(arg);
+  app.loading = false;
+  app.feed = null;
+  app.error = arg;
 });
