@@ -35,7 +35,12 @@
     "productName": "Atsumeru",
     "copyright": "Copyright © 2020 ColMarek",
     "mac": {
-      "category": "public.app-category.entertainment"
+      "category": "public.app-category.entertainment",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "assets/img/icon.icns"
     },
     "win": {
       "target": [
