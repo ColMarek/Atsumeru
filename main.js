@@ -19,6 +19,7 @@ function createWindow() {
     height: 720,
     autoHideMenuBar: true,
     frame,
+    backgroundColor: "#252a30",
     webPreferences: {
       nodeIntegration: true // https://electronjs.org/docs/tutorial/security#how
     }
