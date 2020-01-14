@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, shell } = require("electron");
+const { app, BrowserWindow, Menu, shell, MenuItem } = require("electron");
 const unhandled = require("electron-unhandled");
 const lib = require("./src/lib");
 const logger = require("./src/lib/logger");
@@ -80,6 +80,7 @@ function setupMenu() {
   const menu = Menu.buildFromTemplate([
     {
       label: "File",
+      role: "appMenu",
       submenu: [
         { type: "separator" },
         {
@@ -94,37 +95,18 @@ function setupMenu() {
       label: "Help",
       submenu: [
         {
-          label: "Erai-raws",
+          label: "Erai-raws website",
           click() {
             shell.openExternal("https://www.erai-raws.info/");
           }
         },
         {
-          label: "HorribleSubs",
+          label: "HorribleSubs website",
           click() {
             shell.openExternal("https://horriblesubs.info/");
           }
         },
         { type: "separator" },
-        {
-          label: "Reload page",
-          accelerator: "CmdOrCtrl+Shift+R",
-          visible: !app.isPackaged, // Show page reload when in development
-          click() {
-            win.reload();
-            win.webContents.once("dom-ready", () => {
-              lib.resendPageData(win, false);
-            });
-          }
-        },
-        {
-          label: "Open DevTools",
-          accelerator: "CmdOrCtrl+Shift+I",
-          visible: !app.isPackaged, // Show page reload when in development
-          click() {
-            win.webContents.openDevTools();
-          }
-        },
         {
           label: "About",
           click() {}
@@ -132,6 +114,31 @@ function setupMenu() {
       ]
     }
   ]);
+
+  if (!app.isPackaged) {
+    menu.append(
+      new MenuItem({
+        label: "Debug",
+        submenu: [
+          {
+            label: "Open DevTools",
+            accelerator: "CmdOrCtrl+Shift+I",
+            role: "toggleDevTools"
+          },
+          {
+            label: "Reload page",
+            accelerator: "CmdOrCtrl+Shift+R",
+            click() {
+              win.reload();
+              win.webContents.once("dom-ready", () => {
+                lib.resendPageData(win, false);
+              });
+            }
+          }
+        ]
+      })
+    );
+  }
 
   Menu.setApplicationMenu(menu);
 }
