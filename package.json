@@ -12,7 +12,10 @@
   "scripts": {
     "start": "electron .",
     "start:dev": "nodemon --watch . --exec \"electron . --debug\"",
-    "build": "rimraf dist && electron-builder"
+    "build": "rimraf dist && electron-builder -wml",
+    "build:w": "rimraf dist && electron-builder -w",
+    "build:m": "rimraf dist && electron-builder -m",
+    "build:l": "rimraf dist && electron-builder -l"
   },
   "dependencies": {
     "axios": "^0.19.1",
@@ -41,13 +44,18 @@
         "dmg",
         "zip"
       ],
-      "icon": "assets/img/icon.icns"
+      "icon": "assets/img/icon.icns",
+      "darkModeSupport": true
+    },
+    "dmg": {
+      "backgroundColor": "#373f47"
     },
     "win": {
       "target": [
         "portable"
       ],
       "icon": "assets/img/icon.ico"
-    }
+    },
+    "linux": {}
   }
 }
