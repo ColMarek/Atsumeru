@@ -33,12 +33,14 @@ function createWindow() {
       nodeIntegration: true // https://electronjs.org/docs/tutorial/security#how
     }
   });
-  win.maximize();
   win.loadFile("src/index.html");
 
   setupMenu();
 
   win.once("ready-to-show", () => {
+    // Causes ready-to-show to not fire. https://github.com/electron/electron/issues/20352
+    win.maximize();
+
     win.show();
     win.setProgressBar(2);
     lib.initialize(win).then(() => {
