@@ -1,4 +1,4 @@
-const { shell, ipcMain } = require("electron");
+const { shell, ipcMain, app } = require("electron");
 const erai = require("./erai-data");
 const hs = require("./horrible-subs-data");
 const logger = require("./logger");
@@ -29,6 +29,10 @@ async function resendPageData(win, refreshData) {
   }
   logger.info("Sending data to render process");
   win.webContents.send("feed-data", data);
+}
+
+async function sendAboutData(win) {
+  win.webContents.send("about-data", { appVersion: app.getVersion() });
 }
 
 async function getImages() {
@@ -99,5 +103,6 @@ function getAllIndexesOf(title) {
 
 module.exports = {
   initialize,
-  resendPageData
+  resendPageData,
+  sendAboutData
 };

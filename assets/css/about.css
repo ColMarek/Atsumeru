@@ -1,0 +1,41 @@
+.container-sm {
+  text-align: center;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: fit-content;
+  opacity: 0.4;
+  margin-bottom: 1rem;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.close svg {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.4rem;
+}
+
+.logo {
+  width: 64px;
+  height: 64px;
+}
+
+.version {
+  opacity: 0.6;
+}
+
+.author {
+  margin-top: 1rem;
+}
+
+.author .authorLink {
+  text-decoration: underline;
+  color: #00ffc5;
+  cursor: pointer;
+}

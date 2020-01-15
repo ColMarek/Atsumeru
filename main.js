@@ -112,7 +112,9 @@ function setupMenu() {
         { type: "separator" },
         {
           label: "About",
-          click() {}
+          click() {
+            showAboutWindow();
+          }
         }
       ]
     }
@@ -144,4 +146,23 @@ function setupMenu() {
   }
 
   Menu.setApplicationMenu(menu);
+}
+
+function showAboutWindow() {
+  const aboutWin = new BrowserWindow({
+    width: 400,
+    height: 300,
+    frame: false,
+    parent: win,
+    modal: true,
+    backgroundColor: "#252a30",
+    webPreferences: {
+      nodeIntegration: true // https://electronjs.org/docs/tutorial/security#how
+    }
+  });
+  aboutWin.loadFile("src/about.html");
+
+  aboutWin.webContents.once("dom-ready", () => {
+    lib.sendAboutData(aboutWin);
+  });
 }
