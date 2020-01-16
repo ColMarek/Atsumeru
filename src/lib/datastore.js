@@ -56,4 +56,4 @@ async function findAnimeDetail(title) {
   });
 }
 
-module.exports = { intialize, saveAnimeDetail, findAnimeDetail };
+module.exports = { intialize, saveAnimeDetail, findAnimeDetail, baseDir };

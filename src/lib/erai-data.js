@@ -4,6 +4,7 @@ const parseTorrent = require("parse-torrent");
 const fs = require("fs");
 const { parseString } = require("./utils/xmlToJson");
 const logger = require("./logger");
+const { baseDir } = require("./datastore");
 
 async function getData() {
   logger.info("Fetching data from Erai-raws");
@@ -39,10 +40,13 @@ async function getTorrentMagnet(item) {
   logger.info(`Finished fetching data for ${item.title}`);
 
   return new Promise(resolve => {
-    const stream = response.data.pipe(fs.createWriteStream("./temp.torrent"));
+    const tempTorrentPath = `${baseDir}/temp.torrent`;
+    logger.info(`Saving temporary torrent to ${tempTorrentPath}`);
+    const stream = response.data.pipe(fs.createWriteStream(tempTorrentPath));
     stream.on("finish", () => {
-      const torrentData = parseTorrent(fs.readFileSync("./temp.torrent"));
-      fs.unlinkSync("./temp.torrent");
+      const torrentData = parseTorrent(fs.readFileSync(tempTorrentPath));
+      fs.unlinkSync(tempTorrentPath);
+      logger.info("Deleted temporary torrent");
       const magnetUri = parseTorrent.toMagnetURI(torrentData);
       resolve(magnetUri);
     });
