@@ -87,6 +87,24 @@ function setupMenu() {
       label: "File",
       role: "appMenu",
       submenu: [
+        {
+          label: "Reload Data",
+          click() {
+            win.setProgressBar(2);
+            lib.resendPageData(win, true).then(() => {
+              win.setProgressBar(-1);
+            });
+          }
+        },
+        {
+          label: "Reload Page",
+          click() {
+            win.reload();
+            win.webContents.once("dom-ready", () => {
+              lib.resendPageData(win, false);
+            });
+          }
+        },
         { type: "separator" },
         {
           label: "Exit",
