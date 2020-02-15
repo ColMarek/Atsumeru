@@ -14,7 +14,7 @@ async function getData() {
     const animeTitle = item.title[0]
       .replace("[HorribleSubs] ", "")
       .replace(" [1080p].mkv", "")
-      .replace(/( - )\d*|\d*\.\d*/g, "")
+      .replace(/ - \d.*/g, "")
       .trim();
     data.push({
       title: item.title[0],
