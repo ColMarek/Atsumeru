@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.3
+
+- Add support for 'half' episodes
+  e.g. episode 06.5
+- Add support for titles with hypens.
+  e.g. 'Uchi Tama - Uchi no Tama Shirimasen ka'. The regex used previously to remove the episode number
+  part would also remove this part. Resulting in parsing the anime title as 'Uchi TamaUchi no Tama Shirimasen ka'. Later when removing the title to obtain the episode it would not work.
+
 ## 0.1.2
 
 - Fix downloading from Erai-raws  
