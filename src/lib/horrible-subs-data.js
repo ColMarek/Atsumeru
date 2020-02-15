@@ -12,9 +12,9 @@ async function getData() {
   const data = [];
   for (const item of res.rss.channel[0].item) {
     const animeTitle = item.title[0]
-      .replace("[HorribleSubs]", "")
-      .replace("[1080p].mkv", "")
-      .replace(/( - )\d* /g, "")
+      .replace("[HorribleSubs] ", "")
+      .replace(" [1080p].mkv", "")
+      .replace(/( - )\d*|\d*\.\d*/g, "")
       .trim();
     data.push({
       title: item.title[0],
