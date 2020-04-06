@@ -8,30 +8,35 @@ const { baseDir } = require("./datastore");
 
 async function getData() {
   logger.info("Fetching data from Erai-raws");
-  const response = await axios.get("https://ru.erai-raws.info/rss-1080/");
-  logger.info("Finished fetching data from Erai-raws");
+  try {
+    const response = await axios.get("https://ru.erai-raws.info/rss-1080/");
+    logger.info("Finished fetching data from Erai-raws");
 
-  // The feed uses an en dash which will be parsed as ΓÇô instead of –
-  response.data = response.data.replace(/&#8211;/g, "-");
-  const res = await parseString(response.data);
+    // The feed uses an en dash which will be parsed as ΓÇô instead of –
+    response.data = response.data.replace(/&#8211;/g, "-");
+    const res = await parseString(response.data);
 
-  const data = [];
-  for (const item of res.rss.channel[0].item) {
-    const animeTitle = item.title[0]
-      .replace("[1080p] ", "")
-      .replace(/ - \d*.*/g, "") // – 13 (HEVC),  – 13v2,  – 02
-      .trim();
-    data.push({
-      title: item.title[0],
-      animeTitle,
-      episode: item.title[0].split(`${animeTitle} - `)[1],
-      link: item.link[0],
-      date: moment(item.pubDate[0]).unix(),
-      source: "Erai-raws"
-    });
+    const data = [];
+    for (const item of res.rss.channel[0].item) {
+      const animeTitle = item.title[0]
+        .replace("[1080p] ", "")
+        .replace(/ - \d*.*/g, "") // – 13 (HEVC),  – 13v2,  – 02
+        .trim();
+      data.push({
+        title: item.title[0],
+        animeTitle,
+        episode: item.title[0].split(`${animeTitle} - `)[1],
+        link: item.link[0],
+        date: moment(item.pubDate[0]).unix(),
+        source: "Erai-raws",
+      });
+    }
+
+    return data;
+  } catch (error) {
+    logger.error(error.message);
+    return [];
   }
-
-  return data;
 }
 
 async function getTorrentMagnet(item) {
@@ -39,7 +44,7 @@ async function getTorrentMagnet(item) {
   const response = await axios({ method: "GET", url: item.link, responseType: "stream" });
   logger.info(`Finished fetching data for ${item.title}`);
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const tempTorrentPath = `${baseDir}/temp.torrent`;
     logger.info(`Saving temporary torrent to ${tempTorrentPath}`);
     const stream = response.data.pipe(fs.createWriteStream(tempTorrentPath));
