@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- Prevent failure when fetching anime fails
+
 ## 0.1.3
 
 - Add support for 'half' episodes
