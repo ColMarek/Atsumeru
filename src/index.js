@@ -21,10 +21,8 @@ const app = new Vue({
     },
     filter() {
       if (this.filterTitle == "") {
-        console.log("Resetting");
         this.feed = this.fullFeed;
       } else {
-        console.log("Filtering");
         const regex = new RegExp(`(${this.filterTitle})`, "i");
         this.feed = this.feed.filter(v => regex.test(v.title));
       }
