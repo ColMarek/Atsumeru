@@ -35,21 +35,28 @@
         <h2>Loading</h2>
         <div class="lds-dual-ring"></div>
       </div>
-      <div class="feed" v-if="feed">
-        <div class="feed-item" v-for="(item, index) in feed" :key="index">
-          <img :src="item.imageUrl" alt="Anime" class="feed-item-image">
-          <div class="feed-item-content">
-            <div class="feed-item-content-top">
-              <p class="feed-item-date">{{item.dateFormatted}} - {{item.source}}</p>
-              <p class="feed-item-anime-title" @click="openAnime(item)">{{item.animeTitle}} -
-                {{item.episode}}</p>
-              <p class="feed-item-anime-description">{{item.description}}</p>
-            </div>
-            <div class="feed-item-content-bottom">
-              <svg class="feed-item-download-button" @click="download(item)">
-                <use href="#magnet-link" />
-              </svg>
-              <p class="feed-item-title">{{item.title}}</p>
+      <div v-if="feed">
+        <div class="filter">
+          <label for="title" class="filter-label">Filter</label>
+          <input type="text" name="title" id="title" class="filter-input" placeholder="Title" v-model="filterTitle"
+            @input="filter">
+        </div>
+        <div class="feed">
+          <div class="feed-item" v-for="(item, index) in feed" :key="index">
+            <img :src="item.imageUrl" alt="Anime" class="feed-item-image">
+            <div class="feed-item-content">
+              <div class="feed-item-content-top">
+                <p class="feed-item-date">{{item.dateFormatted}} - {{item.source}}</p>
+                <p class="feed-item-anime-title" @click="openAnime(item)">{{item.animeTitle}} -
+                  {{item.episode}}</p>
+                <p class="feed-item-anime-description">{{item.description}}</p>
+              </div>
+              <div class="feed-item-content-bottom">
+                <svg class="feed-item-download-button" @click="download(item)">
+                  <use href="#magnet-link" />
+                </svg>
+                <p class="feed-item-title">{{item.title}}</p>
+              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,21 @@
+.filter {
+}
+
+.filter-label {
+  opacity: 0.8;
+}
+
+.filter-input {
+  margin-left: 0.4rem;
+  background: #2f353d;
+  border: solid 1px #373f47;
+  border-radius: 4px;
+  padding: 0.4rem;
+  color: white;
+}
+
 .feed {
+  margin-top: 2rem;
   display: grid;
   /* grid-template-columns: repeat(3, auto); */
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));

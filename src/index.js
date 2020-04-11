@@ -6,9 +6,11 @@ const ipc = electron.ipcRenderer;
 const app = new Vue({
   el: "#app",
   data: {
+    fullFeed: null,
     feed: null,
     loading: true,
-    error: null
+    error: null,
+    filterTitle: "",
   },
   methods: {
     download(item) {
@@ -16,19 +18,31 @@ const app = new Vue({
     },
     openAnime(item) {
       ipc.send("open-anime", item);
-    }
-  }
+    },
+    filter() {
+      if (this.filterTitle == "") {
+        console.log("Resetting");
+        this.feed = this.fullFeed;
+      } else {
+        console.log("Filtering");
+        const regex = new RegExp(`(${this.filterTitle})`, "i");
+        this.feed = this.feed.filter(v => regex.test(v.title));
+      }
+    },
+  },
+  filter: function () {},
+  ready: {},
 });
 
 if (process.platform !== "darwin") {
   const customTitlebar = require("custom-electron-titlebar");
   new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex("#252A30"),
-    icon: "../assets/img/icon.ico"
+    icon: "../assets/img/icon.ico",
   });
 }
 
-ipc.on("feed-data", function(_event, arg) {
+ipc.on("feed-data", function (_event, arg) {
   console.log("Received data");
   arg = arg.map(i => {
     if (i.description != null) {
@@ -37,6 +51,7 @@ ipc.on("feed-data", function(_event, arg) {
     return { ...i, dateFormatted: moment.unix(i.date).format("D MMM, h:mm A") };
   });
   app.feed = arg;
+  app.fullFeed = app.feed;
   app.loading = false;
 });
 
@@ -44,5 +59,6 @@ ipc.on("error", (_event, arg) => {
   console.error(arg);
   app.loading = false;
   app.feed = null;
+  app.fullFeed = app.feed;
   app.error = arg;
 });
