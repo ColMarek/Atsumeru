@@ -1,13 +1,12 @@
 const axios = require("axios").default;
 const moment = require("moment");
-const { parseString } = require("./utils/xmlToJson");
-const logger = require("./logger");
+const { parseString } = require("../utils/xmlToJson");
+const logger = require("../utils/logger");
 
 async function getData() {
-  logger.info("Fetching data from HorribleSubs");
   try {
+    logger.info("Fetching data from HorribleSubs");
     const response = await axios.get("http://www.horriblesubs.info/rss.php?res=1080");
-    logger.info("Finished fetching data from HorribleSubs");
     const res = await parseString(response.data);
 
     const data = [];

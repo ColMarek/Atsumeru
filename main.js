@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu, shell, MenuItem } = require("electron");
 const unhandled = require("electron-unhandled");
 const lib = require("./src/lib");
-const logger = require("./src/lib/logger");
+const logger = require("./src/lib/utils/logger");
 logger.info("****************************");
 logger.info("*** Application starting ***");
 logger.info("****************************");
@@ -10,7 +10,7 @@ unhandled({
   logger: error => {
     win.webContents.send("error", error.message);
     logger.error(error.message);
-  }
+  },
 });
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -30,8 +30,8 @@ function createWindow() {
     backgroundColor: "#252a30",
     show: false,
     webPreferences: {
-      nodeIntegration: true // https://electronjs.org/docs/tutorial/security#how
-    }
+      nodeIntegration: true, // https://electronjs.org/docs/tutorial/security#how
+    },
   });
   win.loadFile("src/index.html");
 
@@ -94,7 +94,7 @@ function setupMenu() {
             lib.resendPageData(win, true).then(() => {
               win.setProgressBar(-1);
             });
-          }
+          },
         },
         {
           label: "Reload Page",
@@ -103,16 +103,16 @@ function setupMenu() {
             win.webContents.once("dom-ready", () => {
               lib.resendPageData(win, false);
             });
-          }
+          },
         },
         { type: "separator" },
         {
           label: "Exit",
           click() {
             app.quit();
-          }
-        }
-      ]
+          },
+        },
+      ],
     },
     {
       label: "Help",
@@ -121,23 +121,23 @@ function setupMenu() {
           label: "Erai-raws website",
           click() {
             shell.openExternal("https://www.erai-raws.info/");
-          }
+          },
         },
         {
           label: "HorribleSubs website",
           click() {
             shell.openExternal("https://horriblesubs.info/");
-          }
+          },
         },
         { type: "separator" },
         {
           label: "About",
           click() {
             showAboutWindow();
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   ]);
 
   if (!app.isPackaged) {
@@ -148,7 +148,7 @@ function setupMenu() {
           {
             label: "Open DevTools",
             accelerator: "CmdOrCtrl+Shift+I",
-            role: "toggleDevTools"
+            role: "toggleDevTools",
           },
           {
             label: "Reload page",
@@ -158,9 +158,9 @@ function setupMenu() {
               win.webContents.once("dom-ready", () => {
                 lib.resendPageData(win, false);
               });
-            }
-          }
-        ]
+            },
+          },
+        ],
       })
     );
   }
@@ -177,8 +177,8 @@ function showAboutWindow() {
     modal: true,
     backgroundColor: "#252a30",
     webPreferences: {
-      nodeIntegration: true // https://electronjs.org/docs/tutorial/security#how
-    }
+      nodeIntegration: true, // https://electronjs.org/docs/tutorial/security#how
+    },
   });
   aboutWin.loadFile("src/about.html");
 

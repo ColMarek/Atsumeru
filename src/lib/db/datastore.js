@@ -2,14 +2,14 @@ const { app } = require("electron");
 const path = require("path");
 const Datastore = require("nedb");
 const fs = require("fs");
-const logger = require("./logger");
+const logger = require("../utils/logger");
 
 const baseDir = app.isPackaged ? path.normalize(`${app.getPath("userData")}/data`) : "./data";
 const dbVersionPath = path.normalize(`${baseDir}/db-version`);
 
 const imageDb = new Datastore({
   filename: `${baseDir}/anime-cache-db`,
-  autoload: true
+  autoload: true,
 });
 
 function intialize() {
@@ -23,6 +23,7 @@ function intialize() {
       fs.writeFileSync(dbVersionPath, expectedVersion);
     }
   } else {
+    logger.info("Creating anime-cache-db");
     fs.writeFileSync(dbVersionPath, expectedVersion);
   }
 }
