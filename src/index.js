@@ -28,8 +28,6 @@ const app = new Vue({
       }
     },
   },
-  filter: function () {},
-  ready: {},
 });
 
 if (process.platform !== "darwin") {
