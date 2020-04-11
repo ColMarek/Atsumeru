@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0
+
+- Change font to Rubik
+- Add input field to filter filter by anime title
+
 ## 0.1.4
 
 - Prevent failure when fetching anime fails
