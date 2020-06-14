@@ -10,7 +10,7 @@ const app = new Vue({
     feed: null,
     loading: true,
     error: null,
-    filterTitle: "",
+    filterTitle: ""
   },
   methods: {
     download(item) {
@@ -24,17 +24,17 @@ const app = new Vue({
         this.feed = this.fullFeed;
       } else {
         const regex = new RegExp(`(${this.filterTitle})`, "i");
-        this.feed = this.feed.filter(v => regex.test(v.title));
+        this.feed = this.fullFeed.filter(v => regex.test(v.title));
       }
-    },
-  },
+    }
+  }
 });
 
 if (process.platform !== "darwin") {
   const customTitlebar = require("custom-electron-titlebar");
   new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex("#252A30"),
-    icon: "../assets/img/icon.ico",
+    icon: "../assets/img/icon.ico"
   });
 }
 
